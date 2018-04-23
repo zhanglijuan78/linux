@@ -712,7 +712,7 @@ asmlinkage __visible void __init start_kernel(void)
 		efi_free_boot_services();
 	}
 
-  printk("===lizhi start_kernel()");
+  printk("===lizhi in start_kernel()");
 
 	/* Do the rest non-__init'ed, we're now alive */
 	rest_init();
