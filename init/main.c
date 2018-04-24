@@ -199,6 +199,16 @@ static bool __init obsolete_checksetup(char *line)
 }
 
 /*
+ * Bootmode setup. bootmode is defined as the kernel parameters.
+ */
+static unsigned int bootmode = 1; // Default to be true
+static int __init is_bootmode_setup(char *str) {
+  get_option(&str, &bootmode);
+  return 1;
+}
+__setup("bootmode=", is_bootmode_setup);  // Handle parameter "bootmode="
+
+/*
  * This should be approx 2 Bo*oMips to start (note initial shift), and will
  * still work even if initially too large, it will just take slightly longer
  */
@@ -513,6 +523,30 @@ static void __init mm_init(void)
 
 asmlinkage __visible void __init start_kernel(void)
 {
+  /*
+   * If bootmode is true, set runlevel to 3; otherwise 2;
+   */
+  if (bootmode) {
+    printk("===lizhi in bootmode");
+  }
+
+	unsigned int i;
+  for (i = 0; argv_init[i]; i++) {
+		if (i == MAX_INIT_ARGS) {
+      printk("===lizhi PANIC: exceed MAX_INIT_ARGS");
+			return;
+		}
+  }
+  if (bootmode) {
+    argv_init[i] = "3";
+    printk("===lizhi set runlevel to 3");
+  } else {
+    argv_init[i] = "2";
+    printk("===lizhi set runlevel to 2");
+  }
+
+
+
 	char *command_line;
 	char *after_dashes;
 
