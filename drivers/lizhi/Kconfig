@@ -1,0 +1,18 @@
+# SPDX-License-Identifier: GPL-2.0
+#
+# Character device configuration
+#
+
+menu "lizhi test devices"
+
+source "drivers/tty/Kconfig"
+
+config HELLO_WORLD
+	bool "lizhi hello world device support"
+	default m
+	help
+	  Say Y here if you want to support the lizhi hello world device.
+	  When in doubt, say "Y".
+
+endmenu
+
